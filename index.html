@@ -1,0 +1,417 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>Kenzie Academy - Rover Tutorial</title>
+<style>
+body {font-family: sans-serif; font-weight: 300; margin: 0;}
+#banner {background: #211b17; color: white; padding: 20px;}
+#content {width: 700px; margin: 0 auto;}
+#logo {width: 90px; height: 90px;}
+#headline {position: absolute; left: 130px; top: 45px; font-size: 40px; font-weight: bold;}
+.program {width: 290px; display: block; float: left; position: relative;}
+.check {width: 128px; height: 128px; background-image: url('check.png'); background-size: 128px 128px; position: absolute; left: 160px; top: 80px; display: none;}
+button {font-size: 16px;}
+.reset {display: none;}
+.map {width: 350px; background-image: url('floorplan2.jpg'); background-position: -105px -150px; border: 2px solid black; display: block; margin-top: 20px; float: left; position: relative;}
+.rover {width: 50px; height: 50px; background-image: url('rover.png'); background-size: 50px 50px; position: relative;}
+.fire {width: 64px; height: 64px; background-image: url('fire.gif'); background-size: 64px 64px; position: relative; left: -7px; top: -17px; display: none;}
+#crashexplanation {display: none; background: #ffaaaa; border: 2px solid black; padding: 30px; font-weight: bold;}
+.trash {width: 45px; height: 45px; background-image: url('trash.png'); background-size: 45px 45px; position: absolute;}
+.clear {margin-bottom: 50px; clear: both;}
+</style>
+<script src="jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<header id="banner">
+<img src="logo.png" id="logo" alt="Kenzie Academy">
+<div id="headline">Rover Tutorial</div>
+</header>
+
+<div id="content">
+
+<div id="introduction">
+<h2>Introduction to Rover</h3>
+In this tutorial, you will be writing programs to control Kenzie Academy's brand new Robot Vacuum, nicknamed Rover.<br/>
+<br/>
+This is Rover: <div class="rover" style="display: inline-block; vertical-align: middle;"></div><br/>
+<br/>
+Your programs will be a series of step-by-step instructions that direct Rover how to move.<br/>
+<br/>
+The first instruction you will use is <code>forward();</code>, which tells Rover to take one step forward.<br/>
+Let's begin with a simple program that just issues the <code>forward();</code> instruction twice.<br/>
+Click the "Run" button to see Rover run this program.
+</div>
+<div class="program">
+<h4>Rover's Program:</h4>
+<div id="check1" class="check"></div>
+<textarea id="code1" rows="4" cols="20"  readonly>
+forward();
+forward();
+</textarea>
+<br/>
+<button id="run1" onclick="run1();">Run</button>
+<button id="reset1" class="reset" onclick="run1(true);">Reset</button>
+</div>
+<div style="height: 150px; background-position: -105px -250px;" class="map"><div id="rover1" class="rover" style="left: 30px; top: 60px;"></div></div>
+<div class="clear"></div>
+
+<div id="movingforward">
+<h2>Moving forward</h2>
+Modify Rover's program below to take 3 steps forward so it can pick up the garbage.<br/>
+Then click the "Run" button to see Rover run this program.
+</div>
+<div class="program">
+<h4>Rover's Program:</h4>
+<div id="check2" class="check"></div>
+<textarea id="code2" rows="6" cols="20">
+forward();
+forward();
+</textarea>
+<br/>
+<button id="run2" onclick="run2();">Run</button>
+<button id="reset2" class="reset" onclick="run2(true);">Reset</button>
+</div>
+<div style="height: 150px; background-position: -105px -250px;" class="map">
+<div id="rover2" class="rover" style="left: 30px; top: 60px;"></div>
+<div id="garbage230" class="trash" style="left: 200px; top: 60px;"></div>
+</div>
+<div class="clear"></div>
+
+
+<div id="crashing">
+<h2>Crashing</h2>
+Write a program below to make Rover take 4 steps forward.<br/>
+Then click the "Run" button to see what happens when Rover crashes into a wall or obstacle.
+</div>
+<div class="program">
+<h4>Rover's Program:</h4>
+<div id="check3" class="check"></div>
+<textarea id="code3" rows="6" cols="20">
+</textarea>
+<br/>
+<button id="run3" onclick="run3();">Run</button>
+<button id="reset3" class="reset" onclick="run3(true);">Reset</button>
+</div>
+<div style="height: 150px; background-position: -105px -250px;" class="map"><div id="rover3" class="rover" style="left: 30px; top: 60px;"><div class="fire"></div></div></div>
+<div class="clear"></div>
+<div id="crashexplanation">
+Apparently, Rover is not very durable!<br/>
+If Rover crashes into a wall or an obstacle, Rover stops moving and catches on fire.
+</div>
+<div class="clear"></div>
+
+<div id="turning">
+<h2>Turning</h2>
+The <code>right();</code> and <code>left();</code> instructions make Rover turn 90 degrees.<br/>
+<br/>
+Write a program that specifies a series of <code>forward();</code>, <code>left();</code>, and <code>right();</code>
+instructions so that Rover picks up all the pieces of trash without crashing.
+</div>
+<div class="program">
+<h4>Rover's Program:</h4>
+<div id="check4" class="check"></div>
+<textarea id="code4" rows="15" cols="20">
+</textarea>
+<br/>
+<button id="run4" onclick="run4();">Run</button>
+<button id="reset4" class="reset" onclick="run4(true);">Reset</button>
+</div>
+<div style="height: 350px;" class="map">
+<div id="rover4" class="rover" style="left: 30px; top: 58px;"><div class="fire"></div></div>
+<div id="garbage413" class="trash" style="left: 90px; top: 220px;"></div>
+<div id="garbage430" class="trash" style="left: 205px; top: 60px;"></div>
+</div>
+<div class="clear"></div>
+
+
+<div id="parameters">
+<h2>Parameters</h2>
+In the previous exercises, when you want to make Rover take multiple steps forward, you have had to repeat the <code>forward();</code> instruction.
+Next you will learn a way to avoid this, by passing a parameter.<br/>
+<br/>
+To make Rover take multiple steps forward, you can write an instruction like <code>forward(3);</code>, which tells Rover
+to take 3 steps forward. The number between the parentheses is a <em>parameter</em>.<br/>
+<br/>
+Write a program that will direct Rover to pick up all the pieces of trash, and run it.
+</div>
+<div class="program">
+<h4>Rover's Program:</h4>
+<div id="check5" class="check"></div>
+<textarea id="code5" rows="15" cols="20">
+</textarea>
+<br/>
+<button id="run5" onclick="run5();">Run</button>
+<button id="reset5" class="reset" onclick="run5(true);">Reset</button>
+</div>
+<div style="height: 350px;" class="map">
+<div id="rover5" class="rover" style="left: 30px; top: 58px;"><div class="fire"></div></div>
+<div id="garbage513" class="trash" style="left: 90px; top: 220px;"></div>
+<div id="garbage530" class="trash" style="left: 205px; top: 60px;"></div>
+</div>
+
+<div class="clear"></div>
+
+<script>
+//var rover;
+var open;
+var garbage, garbageCollected;
+var problem;
+var x, y;
+var d;
+
+function run1(reset) {
+	problem = 1;
+	rover = $("#rover1");
+	rover.stop(true);
+	rover.css({"left": "30px", "top": "60px", "transform": "none", "textIndent": 0});
+	open = "00,10,20,30";
+	garbage=[];
+	garbageCollected=[];
+	x=0;
+	y=0;
+	d=1;
+	if(reset == true) {
+		$("#check1").hide();
+		$("#reset1").hide();
+		$("#run1").show();
+	} else {
+		$("#run1").hide();
+		$("#reset1").show();
+		forward(2);
+		setTimeout(function() {
+			$("#check1").fadeIn();
+		}, 1000);
+	}
+}
+
+function run2(reset) {
+	problem = 2;
+	rover = $("#rover2");
+	rover.stop(true);
+	rover.css({"left": "30px", "top": "60px", "transform": "none", "textIndent": 0});
+	open = "00,10,20,30";
+	garbage=["30"];
+	garbageCollected=[];
+	x=0;
+	y=0;
+	d=1;
+	if(reset == true) {
+		$("#check2").hide();
+		$("#reset2").hide();
+		$("#run2").show();
+		$("#garbage230").show();
+		$("#code2").attr("readonly",false);
+	} else {
+		var str = $("#code2").val().replace(/\s/g,'');
+		if(str!="forward();forward();forward();") {
+			alert("For this exercise, repeat the forward instruction exactly 3 times.");
+			return;
+		}
+		$("#code2").attr("readonly",true);
+		$("#run2").hide();
+		$("#reset2").show();
+		forward(3);
+		setTimeout(function() {
+			$("#check2").fadeIn();
+		}, 1400);
+	}
+}
+
+function run3(reset) {
+	problem = 3;
+	rover = $("#rover3");
+	rover.stop(true);
+	rover.css({"left": "30px", "top": "60px", "transform": "none", "textIndent": 0});
+	rover.children(".fire").hide();
+	open = "00,10,20,30";
+	garbage=[];
+	garbageCollected=[];
+	x=0;
+	y=0;
+	d=1;
+	if(reset == true) {
+		$("#check3").hide();
+		$("#reset3").hide();
+		$("#run3").show();
+		$("#code3").attr("readonly",false);
+	} else {
+		var str = $("#code3").val().replace(/\s/g,'');
+		if(str!="forward();forward();forward();forward();") {
+			alert("For this exercise, repeat the forward instruction exactly 4 times.");
+			return;
+		}
+		$("#code3").attr("readonly",true);
+		$("#run3").hide();
+		$("#reset3").show();
+		forward(4);
+		setTimeout(function() {
+			$("#crashexplanation").slideDown(1200);
+			$("#check3").fadeIn();
+		}, 1800);
+	}
+}
+
+
+function run4(reset) {
+	problem = 4;
+	rover = $("#rover4");
+	rover.stop(true);
+	rover.css({"left": "30px", "top": "58px", "transform": "none", "textIndent": 0});
+	rover.children(".fire").hide();
+	open =  "00,      30"+
+			"01,      31"+
+			"02,12,22,32,"+
+			   "13,23,33";
+	garbage=["13", "30"];
+	garbageCollected=[];
+	x=0;
+	y=0;
+	d=1;
+	if(reset == true) {
+		$("#check4").hide();
+		$("#reset4").hide();
+		$("#run4").show();
+		$("#garbage430").show();
+		$("#garbage413").show();
+		$("#code4").attr("readonly",false);
+	} else {
+		var str = $("#code4").val();
+		$("#code4").attr("readonly",true);
+		//validation
+		//if(str!="forward();forward();forward();forward();") {
+		//	alert("For this exercise, repeat the forward instruction exactly 4 times.");
+		//	return;
+		//}
+		$("#run4").hide();
+		$("#reset4").show();
+		eval(str);
+		if(garbageCollected.length == 2) {
+			rover.queue(function() {
+				$("#check4").fadeIn();
+			});
+		}
+	}
+}
+
+
+function run5(reset) {
+	problem = 5;
+	rover = $("#rover5");
+	rover.stop(true);
+	rover.css({"left": "30px", "top": "58px", "transform": "none", "textIndent": 0});
+	rover.children(".fire").hide();
+	open =  "00,      30"+
+			"01,      31"+
+			"02,12,22,32,"+
+			   "13,23,33";
+	garbage=["13", "30"];
+	garbageCollected=[];
+	x=0;
+	y=0;
+	d=1;
+	if(reset == true) {
+		$("#check5").hide();
+		$("#reset5").hide();
+		$("#run5").show();
+		$("#garbage530").show();
+		$("#garbage513").show();
+		$("#code5").attr("readonly",false);
+	} else {
+		var str = $("#code5").val();
+		$("#code5").attr("readonly",true);
+		//validation
+		//if(str!="forward();forward();forward();forward();") {
+		//	alert("For this exercise, repeat the forward instruction exactly 4 times.");
+		//	return;
+		//}
+		$("#run5").hide();
+		$("#reset5").show();
+		eval(str);
+		if(garbageCollected.length == 2) {
+			rover.queue(function() {
+				$("#check5").fadeIn();
+			});
+		}
+	}
+}
+
+function crash(dx,dy) {
+	rover.animate({"left": "+="+dx, "top": "+="+dy},
+		{"complete": function(){
+			rover.children(".fire").fadeIn();
+		}
+	});
+}
+
+function forward(steps) {
+	if (steps === undefined) steps = 1;
+	var dx=0, dy=0;
+	switch(d) {
+		case 0: dy=-1; break;
+		case 1: dx=1; break;
+		case 2: dy=1; break;
+		case 3: dx=-1; break;
+	}
+	x += dx;
+	y += dy;
+	var squareLabel = ""+x+""+y;
+	if(x<0 || y<0 || !open.includes(squareLabel)) {
+		crash(dx*12,dy*12);
+		return;
+	}
+	var params = {};
+	if(garbage.indexOf(squareLabel)>=0 && garbageCollected.indexOf(squareLabel)==-1) {
+		// animate disappearing garbage
+		params =
+			{"start": function() {
+				$("#garbage"+problem+""+squareLabel).fadeOut();
+			}
+		};
+		garbageCollected.push(squareLabel);
+	}
+	var sdx = dx*57, sdy = dy*55;
+	rover.animate({"left": "+="+sdx, "top": "+="+sdy}, params);
+	if(steps>1)
+		forward(steps-1);
+}
+
+function left(steps) {
+	if (steps === undefined) steps = 1;
+	d = (d + 3) % 4;
+	//rover.css({"transform": "rotate("+(d-1)*90+"deg)"});
+	if(d==3) {
+		rover.animate({"textIndent": 270}, 1);
+	}
+	rover.animate({ "textIndent": (d-1)*90 }, {
+		step: function(value) {
+			$(this).css('transform','rotate('+value+'deg)');
+		},
+		duration: 500
+	});
+	if(steps>1)
+		left(steps-1);
+}
+
+function right(steps) {
+	if (steps === undefined) steps = 1;
+	d = (d + 1) % 4;
+	//rover.css({"transform": "rotate("+(d-1)*90+"deg)"});
+	var deg = (d-1)*90;
+	if(d==0) {
+		rover.animate({"textIndent": -180}, 1);
+	}
+	rover.animate({ "textIndent": deg }, {
+		step: function(value) {
+			$(this).css('transform','rotate('+value+'deg)');
+		},
+		duration: 500
+	});
+	if(steps>1)
+		right(steps-1);
+}
+// todo
+// basic validation for 4 and 5
+</script>
+
+</body>
+</html>
