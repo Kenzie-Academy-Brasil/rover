@@ -4,20 +4,24 @@
 <title>Kenzie Academy - Rover Tutorial</title>
 <style>
 body {font-family: sans-serif; font-weight: 300; margin: 0;}
+textarea {font-family: monospace; font-size: 16px;}
+.grayable:read-only {color: #888; background: #eee;}
 #banner {background: #211b17; color: white; padding: 20px;}
 #content {width: 700px; margin: 0 auto;}
 #logo {width: 90px; height: 90px;}
 #headline {position: absolute; left: 130px; top: 45px; font-size: 40px; font-weight: bold;}
 .program {width: 290px; display: block; float: left; position: relative;}
 .check {width: 128px; height: 128px; background-image: url('check.png'); background-size: 128px 128px; position: absolute; left: 160px; top: 80px; display: none;}
-button {font-size: 16px;}
+button {font-size: 24px;}
 .reset {display: none;}
 .map {width: 350px; background-image: url('floorplan2.jpg'); background-position: -105px -150px; border: 2px solid black; display: block; margin-top: 20px; float: left; position: relative;}
 .rover {width: 50px; height: 50px; background-image: url('rover.png'); background-size: 50px 50px; position: relative;}
 .fire {width: 64px; height: 64px; background-image: url('fire.gif'); background-size: 64px 64px; position: relative; left: -7px; top: -17px; display: none;}
 #crashexplanation {display: none; background: #ffaaaa; border: 2px solid black; padding: 30px; font-weight: bold;}
+#password {display: none; position: absolute; left: 310px; top: 40px; background: #eee; border: 2px solid black; padding: 30px; width: 240px; height: 150px; font-weight: bold; z-index: 5;}
 .trash {width: 45px; height: 45px; background-image: url('trash.png'); background-size: 45px 45px; position: absolute;}
 .clear {margin-bottom: 50px; clear: both;}
+.blue {color: blue; font-family:'Courier New', Courier, monospace; font-size: larger;}
 </style>
 <script src="jquery-3.2.1.min.js"></script>
 </head>
@@ -44,7 +48,7 @@ Click the "Run" button to see Rover run this program.
 <div class="program">
 <h4>Rover's Program:</h4>
 <div id="check1" class="check"></div>
-<textarea id="code1" rows="4" cols="20"  readonly>
+<textarea id="code1" rows="4" cols="14"  readonly>
 forward();
 forward();
 </textarea>
@@ -57,13 +61,15 @@ forward();
 
 <div id="movingforward">
 <h2>Moving forward</h2>
-Modify Rover's program below to take 3 steps forward so it can pick up the garbage.<br/>
+This is a piece of trash: <div class="trash" style="display: inline-block; position: relative; top: 10px;"></div><br/>
+<br/>
+Modify Rover's program below to take 3 steps forward so it can pick up the trash.<br/>
 Then click the "Run" button to see Rover run this program.
 </div>
 <div class="program">
 <h4>Rover's Program:</h4>
 <div id="check2" class="check"></div>
-<textarea id="code2" rows="6" cols="20">
+<textarea id="code2" rows="4" cols="14" class="grayable">
 forward();
 forward();
 </textarea>
@@ -86,7 +92,7 @@ Then click the "Run" button to see what happens when Rover crashes into a wall o
 <div class="program">
 <h4>Rover's Program:</h4>
 <div id="check3" class="check"></div>
-<textarea id="code3" rows="6" cols="20">
+<textarea id="code3" rows="5" cols="14" class="grayable">
 </textarea>
 <br/>
 <button id="run3" onclick="run3();">Run</button>
@@ -95,7 +101,7 @@ Then click the "Run" button to see what happens when Rover crashes into a wall o
 <div style="height: 150px; background-position: -105px -250px;" class="map"><div id="rover3" class="rover" style="left: 30px; top: 60px;"><div class="fire"></div></div></div>
 <div class="clear"></div>
 <div id="crashexplanation">
-Apparently, Rover is not very durable!<br/>
+This experiment shows us that Rover is not very durable!<br/>
 If Rover crashes into a wall or an obstacle, Rover stops moving and catches on fire.
 </div>
 <div class="clear"></div>
@@ -110,7 +116,7 @@ instructions so that Rover picks up all the pieces of trash without crashing.
 <div class="program">
 <h4>Rover's Program:</h4>
 <div id="check4" class="check"></div>
-<textarea id="code4" rows="15" cols="20">
+<textarea id="code4" rows="15" cols="14" class="grayable">
 </textarea>
 <br/>
 <button id="run4" onclick="run4();">Run</button>
@@ -137,7 +143,18 @@ Write a program that will direct Rover to pick up all the pieces of trash, and r
 <div class="program">
 <h4>Rover's Program:</h4>
 <div id="check5" class="check"></div>
-<textarea id="code5" rows="15" cols="20">
+<div id="password">
+	<p>
+		Well done!
+	</p>
+	<p>
+		You've successfully programmed Rover to pick up all the pieces of trash.
+	</p>
+	<p>
+		Rover says: "<span class="blue">All Clean!</span>"
+	</p>
+</div>
+<textarea id="code5" rows="15" cols="14" class="grayable">
 </textarea>
 <br/>
 <button id="run5" onclick="run5();">Run</button>
@@ -159,6 +176,10 @@ var problem;
 var x, y;
 var d;
 
+if ( window.location !== window.parent.location ) {
+  $("#banner").hide();
+}
+
 function run1(reset) {
 	problem = 1;
 	rover = $("#rover1");
@@ -176,7 +197,8 @@ function run1(reset) {
 		$("#run1").show();
 	} else {
 		$("#run1").hide();
-		$("#reset1").show();
+		//$("#reset1").show();
+		crashed = false;
 		forward(2);
 		setTimeout(function() {
 			$("#check1").fadeIn();
@@ -203,13 +225,22 @@ function run2(reset) {
 		$("#code2").attr("readonly",false);
 	} else {
 		var str = $("#code2").val().replace(/\s/g,'');
+		if(str.includes(":")) {
+			alert("Note that ; and : are different characters.\nRover's programs never use the : character.\nMake sure you only use ; in Rover's program at the end of each command.");
+			return;
+		}
+		if(str.toLowerCase()!=str) {
+			alert("Rover's programs should have all commands written in lowercase.\nRemove any uppercase letters from Rover's program.");
+			return;
+		}
 		if(str!="forward();forward();forward();") {
-			alert("For this exercise, repeat the forward instruction exactly 3 times.");
+			alert("For this exercise, repeat the forward(); instruction exactly 3 times.");
 			return;
 		}
 		$("#code2").attr("readonly",true);
 		$("#run2").hide();
 		$("#reset2").show();
+		crashed = false;
 		forward(3);
 		setTimeout(function() {
 			$("#check2").fadeIn();
@@ -236,6 +267,14 @@ function run3(reset) {
 		$("#code3").attr("readonly",false);
 	} else {
 		var str = $("#code3").val().replace(/\s/g,'');
+		if(str.includes(":")) {
+			alert("Note that ; and : are different characters.\nRover's programs never use the : character.\nMake sure you only use ; in Rover's program at the end of each command.");
+			return;
+		}
+		if(str.toLowerCase()!=str) {
+			alert("Rover's programs should have all commands written in lowercase.\nRemove any uppercase letters from Rover's program.");
+			return;
+		}
 		if(str!="forward();forward();forward();forward();") {
 			alert("For this exercise, repeat the forward instruction exactly 4 times.");
 			return;
@@ -243,6 +282,7 @@ function run3(reset) {
 		$("#code3").attr("readonly",true);
 		$("#run3").hide();
 		$("#reset3").show();
+		crashed = false;
 		forward(4);
 		setTimeout(function() {
 			$("#crashexplanation").slideDown(1200);
@@ -258,8 +298,8 @@ function run4(reset) {
 	rover.stop(true);
 	rover.css({"left": "30px", "top": "58px", "transform": "none", "textIndent": 0});
 	rover.children(".fire").hide();
-	open =  "00,      30"+
-			"01,      31"+
+	open =  "00,      30,"+
+			"01,      31,"+
 			"02,12,22,32,"+
 			   "13,23,33";
 	garbage=["13", "30"];
@@ -269,6 +309,7 @@ function run4(reset) {
 	d=1;
 	if(reset == true) {
 		$("#check4").hide();
+		$("#password").hide();
 		$("#reset4").hide();
 		$("#run4").show();
 		$("#garbage430").show();
@@ -276,14 +317,18 @@ function run4(reset) {
 		$("#code4").attr("readonly",false);
 	} else {
 		var str = $("#code4").val();
+		if(str.includes(":")) {
+			alert("Note that ; and : are different characters.\nRover's programs never use the : character.\nMake sure you only use ; in Rover's program at the end of each command.");
+			return;
+		}
+		if(str.toLowerCase()!=str) {
+			alert("Rover's programs should have all commands written in lowercase.\nRemove any uppercase letters from Rover's program.");
+			return;
+		}
 		$("#code4").attr("readonly",true);
-		//validation
-		//if(str!="forward();forward();forward();forward();") {
-		//	alert("For this exercise, repeat the forward instruction exactly 4 times.");
-		//	return;
-		//}
 		$("#run4").hide();
 		$("#reset4").show();
+		crashed = false;
 		eval(str);
 		if(garbageCollected.length == 2) {
 			rover.queue(function() {
@@ -300,8 +345,8 @@ function run5(reset) {
 	rover.stop(true);
 	rover.css({"left": "30px", "top": "58px", "transform": "none", "textIndent": 0});
 	rover.children(".fire").hide();
-	open =  "00,      30"+
-			"01,      31"+
+	open =  "00,      30,"+
+			"01,      31,"+
 			"02,12,22,32,"+
 			   "13,23,33";
 	garbage=["13", "30"];
@@ -312,30 +357,42 @@ function run5(reset) {
 	if(reset == true) {
 		$("#check5").hide();
 		$("#reset5").hide();
+		$("#password").hide();
 		$("#run5").show();
 		$("#garbage530").show();
 		$("#garbage513").show();
 		$("#code5").attr("readonly",false);
 	} else {
-		var str = $("#code5").val();
-		$("#code5").attr("readonly",true);
+		var str = $("#code5").val().replace(/\s/g,'');
 		//validation
-		//if(str!="forward();forward();forward();forward();") {
-		//	alert("For this exercise, repeat the forward instruction exactly 4 times.");
-		//	return;
-		//}
+		if(str.includes(":")) {
+			alert("Note that ; and : are different characters.\nRover's programs never use the : character.\nMake sure you only use ; in Rover's program at the end of each command.");
+			return;
+		}
+		if(str.toLowerCase()!=str) {
+			alert("Rover's programs should have all commands written in lowercase.\nRemove any uppercase letters from Rover's program.");
+			return;
+		}
+		if(str.includes("forward();forward();")) {
+			alert("Instead of giving Rover multiple forward(); instructions in a row, pass a parameter specifying how many steps forward Rover should move, like forward(2); or forward(3);");
+			return;
+		}
+		$("#code5").attr("readonly",true);
 		$("#run5").hide();
 		$("#reset5").show();
+		crashed = false;
 		eval(str);
 		if(garbageCollected.length == 2) {
 			rover.queue(function() {
 				$("#check5").fadeIn();
+				$("#password").fadeIn();
 			});
 		}
 	}
 }
 
 function crash(dx,dy) {
+	crashed = true;
 	rover.animate({"left": "+="+dx, "top": "+="+dy},
 		{"complete": function(){
 			rover.children(".fire").fadeIn();
@@ -343,7 +400,10 @@ function crash(dx,dy) {
 	});
 }
 
+var crashed = false;
+
 function forward(steps) {
+	if(crashed) return;
 	if (steps === undefined) steps = 1;
 	var dx=0, dy=0;
 	switch(d) {
@@ -376,6 +436,7 @@ function forward(steps) {
 }
 
 function left(steps) {
+	if(crashed) return;
 	if (steps === undefined) steps = 1;
 	d = (d + 3) % 4;
 	//rover.css({"transform": "rotate("+(d-1)*90+"deg)"});
@@ -393,6 +454,7 @@ function left(steps) {
 }
 
 function right(steps) {
+	if(crashed) return;
 	if (steps === undefined) steps = 1;
 	d = (d + 1) % 4;
 	//rover.css({"transform": "rotate("+(d-1)*90+"deg)"});
